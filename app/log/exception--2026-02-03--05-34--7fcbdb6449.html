@@ -1,0 +1,18 @@
+
+Warning: require(/opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen<?= BASE_URL ?>/assets/page.phtml): Failed to open stream: No such file or directory in /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php on line 191
+ErrorException: require(/opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen<?= BASE_URL ?>/assets/page.phtml): Failed to open stream: No such file or directory in /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php:191
+Stack trace:
+#0 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/Debugger.php(366): Tracy\DevelopmentStrategy->handleError(2, '...', '...', 191)
+#1 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php(191): Tracy\Debugger::errorHandler(2, '...', '...', 191)
+#2 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php(191): require('...')
+#3 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen/BlueScreen.php(141): Tracy\BlueScreen->renderTemplate(Object(Error), '...', false)
+#4 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Logger/Logger.php(153): Tracy\BlueScreen->renderToFile(Object(Error), '...')
+#5 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Logger/Logger.php(73): Tracy\Logger->logException(Object(Error), '...')
+#6 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/Debugger.php(567): Tracy\Logger->log(Object(Error), '...')
+#7 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/DevelopmentStrategy.php(51): Tracy\Debugger::log(Object(Error), '...')
+#8 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/DevelopmentStrategy.php(43): Tracy\DevelopmentStrategy->renderExceptionCli(Object(Error))
+#9 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/Debugger.php(327): Tracy\DevelopmentStrategy->handleException(Object(Error), false)
+#10 /opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/Debugger/Debugger.php(226): Tracy\Debugger::exceptionHandler(Object(Error))
+#11 [internal function]: Tracy\Debugger::Tracy\{closure}(Object(Error))
+#12 {main}
+Tracy is unable to log error: Failed opening required '/opt/lampp/htdocs/S3/Projet_Binome/3fevrier2026/MVC_template/vendor/tracy/tracy/src/Tracy/BlueScreen<?= BASE_URL ?>/assets/page.phtml' (include_path='.:/usr/share/php')
