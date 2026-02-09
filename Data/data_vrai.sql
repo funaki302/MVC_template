@@ -37,9 +37,6 @@ create table tk_messages(
 
 alter table tk_user drop column last_active; 
 alter table tk_user add column last_active datetime; 
-alter table tk_messages add column seen_at datetime null; 
-
-
 
 
 create table tk_categorie(
