@@ -2,7 +2,7 @@ create database takalo_takalo;
 use takalo_takalo;
 
 
-create table user(
+create table tk_user(
     id_user int auto_increment primary key,
     name varchar(200),
     email varchar(200),
@@ -14,40 +14,40 @@ create table user(
     role ENUM('admin','user') DEFAULT 'user'
 );
 
-create table discussion(
+create table tk_discussion(
     id_discussion int auto_increment primary key,
     title varchar(200),
     id_user1 int,
     id_user2 int,
     date_creation date,
-    foreign key (id_user1) references user(id_user),
-    foreign key (id_user2) references user(id_user)
+    foreign key (id_user1) references tk_user(id_user),
+    foreign key (id_user2) references tk_user(id_user)
 );
 
-create table messages(
+create table tk_messages(
     id_message int auto_increment primary key,
     id_discussion int,
     id_sender int,
     contenue text,
     date_envoie date,
     seen_at datetime null,
-    foreign key (id_discussion) references discussion(id_discussion),
-    foreign key (id_sender) references user(id_user)
+    foreign key (id_discussion) references tk_discussion(id_discussion),
+    foreign key (id_sender) references tk_user(id_user)
 );
 
-alter table user drop column last_active; 
-alter table user add column last_active datetime; 
-alter table messages add column seen_at datetime null; 
+alter table tk_user drop column last_active; 
+alter table tk_user add column last_active datetime; 
+alter table tk_messages add column seen_at datetime null; 
 
 
 
 
-create table categorie(
+create table tk_categorie(
     id_categorie int auto_increment primary key,
     nom_categorie varchar(200) not null unique
 );
 
-create table objets(
+create table tk_objets(
     id_objet int auto_increment primary key,
     id_proprietaire int not null,
     id_categorie int not null,
@@ -55,19 +55,19 @@ create table objets(
     description text,
     prix_estime decimal(10,2),
     date_creation datetime,
-    foreign key (id_proprietaire) references user(id_user),
-    foreign key (id_categorie) references categorie(id_categorie)
+    foreign key (id_proprietaire) references tk_user(id_user),
+    foreign key (id_categorie) references tk_categorie(id_categorie)
 );
 
-create table objet_img(
+create table tk_objet_img(
     id_objet_img int auto_increment primary key,
     id_objet int not null,
     image varchar(200) not null,
-    foreign key (id_objet) references objets(id_objet)
+    foreign key (id_objet) references tk_objets(id_objet)
 );
 
 
-create table echanges(
+create table tk_echanges(
     id_echange int auto_increment primary key,
     id_proposeur int not null,
     id_receveur int not null,
@@ -75,19 +75,19 @@ create table echanges(
     objet_requise int not null,
     status ENUM('attente','accepter','refuser') DEFAULT 'attente',
     date_proposition datetime,
-    foreign key(id_proposeur) references user(id_user),
-    foreign key(id_receveur) references user(id_user),
-    foreign key(objet_proposer) references objets(id_objet),
-    foreign key(objet_requise) references objets(id_objet)
+    foreign key(id_proposeur) references tk_user(id_user),
+    foreign key(id_receveur) references tk_user(id_user),
+    foreign key(objet_proposer) references tk_objets(id_objet),
+    foreign key(objet_requise) references tk_objets(id_objet)
 );
 
-create table objet_history(
+create table tk_objet_history(
     id_objet_history int auto_increment primary key,
     id_objet int not null,
     id_proprietaire int not null,
     id_echange int not null,
     date_echange datetime,
-    foreign key(id_objet) references objets (id_objet),
-    foreign key(id_proprietaire) references user (id_user),
-    foreign key(id_echange) references echanges (id_echange),
+    foreign key(id_objet) references tk_objets (id_objet),
+    foreign key(id_proprietaire) references tk_user (id_user),
+    foreign key(id_echange) references tk_echanges (id_echange)
 );

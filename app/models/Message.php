@@ -13,7 +13,7 @@ use PDOException;
 
 class Message {
     private $db;
-    private $table = 'messages';
+    private $table = 'tk_messages';
     
     public function __construct() {
         $app = \Flight::app();
@@ -27,12 +27,12 @@ class Message {
      */
     public function getAll($options = []) {
         $sql = "SELECT m.*, 
-                       u.name as sender_name, u.email as sender_email,
-                       d.title as discussion_title
-                FROM {$this->table} m
-                LEFT JOIN user u ON m.id_sender = u.id_user
-                LEFT JOIN discussion d ON m.id_discussion = d.id_discussion
-                ";
+                   u.name as sender_name, u.email as sender_email,
+                   d.title as discussion_title
+            FROM {$this->table} m
+            LEFT JOIN tk_user u ON m.id_sender = u.id_user
+            LEFT JOIN tk_discussion d ON m.id_discussion = d.id_discussion
+            ";
         $params = [];
         
         // Filtres
@@ -80,12 +80,12 @@ class Message {
      */
     public function getById($id) {
         $sql = "SELECT m.*, 
-                       u.name as sender_name, u.email as sender_email,
-                       d.title as discussion_title
-                FROM {$this->table} m
-                LEFT JOIN user u ON m.id_sender = u.id_user
-                LEFT JOIN discussion d ON m.id_discussion = d.id_discussion
-                WHERE m.id_message = ?";
+                   u.name as sender_name, u.email as sender_email,
+                   d.title as discussion_title
+            FROM {$this->table} m
+            LEFT JOIN tk_user u ON m.id_sender = u.id_user
+            LEFT JOIN tk_discussion d ON m.id_discussion = d.id_discussion
+            WHERE m.id_message = ?";
         
         try {
             $stmt = $this->db->prepare($sql);
@@ -274,12 +274,12 @@ class Message {
      */
     public function getLastMessageByDiscussion($discussionId) {
         $sql = "SELECT m.*, 
-                       u.name as sender_name, u.email as sender_email
-                FROM {$this->table} m
-                LEFT JOIN user u ON m.id_sender = u.id_user
-                WHERE m.id_discussion = ?
-                ORDER BY m.date_envoie DESC, m.id_message DESC
-                LIMIT 1";
+                   u.name as sender_name, u.email as sender_email
+            FROM {$this->table} m
+            LEFT JOIN tk_user u ON m.id_sender = u.id_user
+            WHERE m.id_discussion = ?
+            ORDER BY m.date_envoie DESC, m.id_message DESC
+            LIMIT 1";
         
         try {
             $stmt = $this->db->prepare($sql);

@@ -13,7 +13,7 @@ use PDOException;
 
 class Discussion {
     private $db;
-    private $table = 'discussion';
+    private $table = 'tk_discussion';
     
     public function __construct() {
         $app = \Flight::app();
@@ -30,8 +30,8 @@ class Discussion {
                        u1.name as user1_name, u1.email as user1_email,
                        u2.name as user2_name, u2.email as user2_email
                 FROM {$this->table} d
-                LEFT JOIN user u1 ON d.id_user1 = u1.id_user
-                LEFT JOIN user u2 ON d.id_user2 = u2.id_user";
+                LEFT JOIN tk_user u1 ON d.id_user1 = u1.id_user
+                LEFT JOIN tk_user u2 ON d.id_user2 = u2.id_user";
         $params = [];
         
         // Filtres
@@ -75,12 +75,12 @@ class Discussion {
      */
     public function getById($id) {
         $sql = "SELECT d.*, 
-                       u1.name as user1_name, u1.status as user1_status, u1.email as user1_email,
-                       u2.name as user2_name, u2.status as user2_status, u2.email as user2_email
-                FROM {$this->table} d
-                LEFT JOIN user u1 ON d.id_user1 = u1.id_user
-                LEFT JOIN user u2 ON d.id_user2 = u2.id_user
-                WHERE d.id_discussion = ?";
+                   u1.name as user1_name, u1.status as user1_status, u1.email as user1_email,
+                   u2.name as user2_name, u2.status as user2_status, u2.email as user2_email
+            FROM {$this->table} d
+            LEFT JOIN tk_user u1 ON d.id_user1 = u1.id_user
+            LEFT JOIN tk_user u2 ON d.id_user2 = u2.id_user
+            WHERE d.id_discussion = ?";
         
         try {
             $stmt = $this->db->prepare($sql);
@@ -103,8 +103,8 @@ class Discussion {
                     u.phone,
                     u.role,
                     u.status
-                FROM discussion d
-                JOIN user u
+                FROM {$this->table} d
+                JOIN tk_user u
                     ON u.id_user = IF(d.id_user1 = :userId, d.id_user2, d.id_user1)
                 WHERE u.name LIKE :name
                 AND (d.id_user1 = :userId OR d.id_user2 = :userId)";
@@ -143,19 +143,19 @@ class Discussion {
                     lastm.contenue AS last_message,
                     lastm.date_envoie AS last_message_date,
                     lastm.id_sender AS last_message_sender
-                FROM discussion d
-                JOIN user u
+                FROM {$this->table} d
+                JOIN tk_user u
                     ON u.id_user = IF(d.id_user1 = ?, d.id_user2, d.id_user1)
                 LEFT JOIN (
                     SELECT
                         id_discussion,
                         SUM(CASE WHEN seen_at IS NULL AND id_sender != ? THEN 1 ELSE 0 END) AS unread_count
-                    FROM messages
+                    FROM tk_messages
                     GROUP BY id_discussion
                 ) unread ON unread.id_discussion = d.id_discussion
-                LEFT JOIN messages lastm ON lastm.id_message = (
+                LEFT JOIN tk_messages lastm ON lastm.id_message = (
                     SELECT MAX(m2.id_message)
-                    FROM messages m2
+                    FROM tk_messages m2
                     WHERE m2.id_discussion = d.id_discussion
                 )
                 WHERE d.id_user1 = ? OR d.id_user2 = ?
@@ -302,11 +302,11 @@ class Discussion {
     }
 
     public function getNoConv($userId){
-        $sql = "SELECT * FROM user WHERE id_user NOT IN 
+        $sql = "SELECT * FROM tk_user WHERE id_user NOT IN 
                 (SELECT
                     u.id_user
-                FROM discussion d
-                JOIN user u
+                FROM {$this->table} d
+                JOIN tk_user u
                     ON u.id_user = IF(d.id_user1 = ?, d.id_user2, d.id_user1)
                 WHERE d.id_user1 = ? OR d.id_user2 = ?) 
                 AND id_user != ?
