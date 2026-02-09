@@ -68,7 +68,7 @@ return [
 	'database' => [
 		// MySQL Example:
 		'host'     => '127.0.0.1',
-		'dbname'   => 'MVC_template',
+		'dbname'   => 'takalo_takalo',
 		'user'     => 'root',
 		'password' => '',
 

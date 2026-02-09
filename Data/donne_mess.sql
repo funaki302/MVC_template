@@ -1,4 +1,4 @@
-USE MVC_template;
+USE takalokalo;
 
 INSERT INTO user (name, email, role, status, department, phone, join_date, last_active, pwd) VALUES
 ('John Doe', 'john.doe@example.com', 'admin', 'active', 'IT', '+261341234567', '2024-01-15', '2026-02-01 09:12', 'admin123'),
